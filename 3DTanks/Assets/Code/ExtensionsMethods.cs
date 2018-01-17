@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 namespace Tanks3D
 {
     public static class ExtensionsMethods
     {
-        public static TComponent GetOrAddComponent<TComponent>( this GameObject gameObject )
+        public static TComponent GetOrAddComponent<TComponent>(this GameObject gameObject)
             where TComponent : Component
         {
             TComponent component = gameObject.GetComponent<TComponent>();
@@ -16,5 +15,89 @@ namespace Tanks3D
             }
             return component;
         }
+
+        public static Component GetOrAddComponent(this GameObject gameObject, Type type)
+        {
+            Component component = gameObject.GetComponent(type);
+            if (component == null)
+            {
+                component = gameObject.AddComponent(type);
+            }
+            return component;
+        }
+
+        // GetComponentInInactiveParents
+
+        public static TComponent GetComponentInInactiveParents<TComponent>(this GameObject gameObject)
+            where TComponent : Component
+        {
+            return GetComponentInInactiveParentsRecursive<TComponent>(gameObject);
+        }
+
+        private static TComponent GetComponentInInactiveParentsIterative<TComponent>(this GameObject gameObject)
+            where TComponent : Component
+        {
+            TComponent result;
+            Transform transform = gameObject.transform;
+            do
+            {
+                result = transform.GetComponent<TComponent>();
+                transform = transform.parent;
+            } while (result == null && transform != null);
+            return result;
+        }
+
+        private static TComponent GetComponentInInactiveParentsRecursive<TComponent>(this GameObject gameObject)
+            where TComponent : Component
+        {
+            TComponent result = gameObject.GetComponent<TComponent>();
+            if (result == null)
+            {
+                Transform parentTransform = gameObject.transform.parent;
+                if (parentTransform != null)
+                {
+                    result = parentTransform.gameObject.GetComponentInInactiveParentsRecursive<TComponent>();
+                }
+            }
+            return result;
+        }
+
+        // GetComponentInInactiveParents
+        // GetComponentInHierarchy
+
+        public static TComponent GetComponentInHierarchy<TComponent>(this GameObject gameObject,
+            Boolean includeInactive = false)
+            where TComponent : Component
+        {
+            return includeInactive
+                ? gameObject.GetComponentInInactiveHierarchy<TComponent>()
+                : gameObject.GetComponentInActiveHierarchy<TComponent>();
+        }
+
+        private static TComponent GetComponentInActiveHierarchy<TComponent>(this GameObject gameObject)
+            where TComponent : Component
+        {
+            TComponent result = gameObject.GetComponentInChildren<TComponent>(false);
+            if (result == null)
+            {
+                result = gameObject.GetComponentInParent<TComponent>();
+            }
+
+            return result;
+        }
+
+        private static TComponent GetComponentInInactiveHierarchy<TComponent>(this GameObject gameObject)
+            where TComponent : Component
+        {
+            TComponent result = gameObject.GetComponentInChildren<TComponent>(true);
+            if (result == null)
+            {
+                result = gameObject.GetComponentInInactiveParents<TComponent>();
+            }
+
+            return result;
+        }
+
+        // GetComponentInHierarchy
     }
 }

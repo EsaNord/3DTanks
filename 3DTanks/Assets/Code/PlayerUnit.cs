@@ -8,29 +8,22 @@ namespace Tanks3D
     public class PlayerUnit : Unit
     {
         [SerializeField]
-        private float _moveSpeed = 5f;
+        private string _horizontalAxis = "Horizontal";
         [SerializeField]
-        private float _turnSpeed = 5f;
-        [SerializeField]
-        private const string horizontalAxis = "Horizontal";
-        [SerializeField]
-        private const string verticalAxis = "Vertical";
-
-        private void Start()
-        {
-            Init();
-            Mover.Init(_moveSpeed, _turnSpeed);
-        }
+        private string _verticalAxis = "Vertical";
 
         protected override void Update()
         {
-            var _input = ReadInput();
-            Mover.Move(_input);
+            var input = ReadInput();
+            Mover.Turn(input.x);
+            Mover.Move(input.z);
         }
 
         private Vector3 ReadInput()
         {
-            return new Vector3(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis), 0f);
+            float movement = Input.GetAxis(_verticalAxis);
+            float turn = Input.GetAxis(_horizontalAxis);
+            return new Vector3(turn, 0, movement);
         }
     }
 }

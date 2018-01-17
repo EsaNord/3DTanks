@@ -7,7 +7,8 @@ namespace Tanks3D
 {
     public class TransformMover : MonoBehaviour, IMover
     {
-        private float _moveSpeed, _turnSpeed;
+        private float _moveSpeed;
+        private float _turnSpeed;
 
         public void Init(float moveSpeed, float turnSpeed)
         {
@@ -15,10 +16,19 @@ namespace Tanks3D
             _turnSpeed = turnSpeed;
         }
 
-        public void Move(Vector3 input)
-        {            
-            transform.Translate(new Vector3(0f, 0f, input.y) * _moveSpeed * Time.deltaTime);
-            transform.Rotate(new Vector3(0f, input.x, 0f) * _turnSpeed * Time.deltaTime);
-        }        
+        public void Turn(float amount)
+        {
+            Vector3 rotation = transform.localEulerAngles;
+            rotation.y += amount * _turnSpeed * Time.deltaTime;
+            transform.localEulerAngles = rotation;
+        }
+
+        public void Move(float amount)
+        {
+            Vector3 position = transform.position;
+            Vector3 movement = transform.forward * amount * _moveSpeed * Time.deltaTime;
+            position += movement;
+            transform.position = position;
+        }
     }
 }
