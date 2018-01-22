@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 341226070}
   - component: {fileID: 341226069}
   - component: {fileID: 341226068}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,8 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.39999998}
   m_LocalScale: {x: 0.1, y: 0.4, z: 0.1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1971235737}
   m_Father: {fileID: 1786863009}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -208,7 +209,7 @@ GameObject:
   - component: {fileID: 428035271}
   - component: {fileID: 428035270}
   - component: {fileID: 428035269}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -270,13 +271,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 428035268}
-  m_LocalRotation: {x: 0.20911735, y: -0, z: -0, w: 0.9778906}
-  m_LocalPosition: {x: 0, y: 1.54, z: -0.8100004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.17948695, y: -0.50179106, z: 0.10730578, w: 0.8393305}
+  m_LocalPosition: {x: 7.01, y: 2.05, z: 0.39}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
-  m_Father: {fileID: 1810463735}
+  m_Father: {fileID: 2078904983}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 24.141, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 24.141, y: -61.746002, z: 0}
 --- !u!1 &555451949
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +289,7 @@ GameObject:
   - component: {fileID: 555451952}
   - component: {fileID: 555451951}
   - component: {fileID: 555451950}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +440,7 @@ GameObject:
   - component: {fileID: 1535078600}
   - component: {fileID: 1535078599}
   - component: {fileID: 1535078598}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +523,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1786863009}
   - component: {fileID: 1786863010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,6 +557,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 114870133278243516, guid: 86ee68201e6359340b79c42ce503e904,
     type: 2}
+  _fireRate: 0.33333334
+  _shootingPoint: {fileID: 1971235737}
 --- !u!1 &1810463732
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +569,7 @@ GameObject:
   - component: {fileID: 1810463735}
   - component: {fileID: 1810463734}
   - component: {fileID: 1810463733}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerTank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,8 +598,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63e705f8df6d814d9c639f5eb7b42b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
-  _turnSpeed: 5
+  _moveSpeed: 7
+  _turnSpeed: 7
   _horizontalAxis: Horizontal
   _verticalAxis: Vertical
 --- !u!4 &1810463735
@@ -610,9 +613,36 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1535078597}
-  - {fileID: 428035272}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1971235736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1971235737}
+  m_Layer: 8
+  m_Name: BarrelEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1971235737
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1971235736}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 341226067}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2078904982
 GameObject:
@@ -625,7 +655,7 @@ GameObject:
   - component: {fileID: 2078904986}
   - component: {fileID: 2078904985}
   - component: {fileID: 2078904984}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,6 +673,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 1, z: 0.3125}
   m_Children:
   - {fileID: 1786863009}
+  - {fileID: 428035272}
   m_Father: {fileID: 1535078597}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

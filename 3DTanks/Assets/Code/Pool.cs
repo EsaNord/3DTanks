@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,9 @@ namespace Tanks3D
 		// The list containing all the objects in this pool.
 		private List< T > _pool;
 
-		public Pool(int poolSize, T prefab, bool shouldGrow)
+        private Action<T> _initMethod;
+
+        public Pool(int poolSize, T prefab, bool shouldGrow)
 		{
             _poolSize = poolSize;
             _objectPrefab = prefab;
@@ -30,19 +33,28 @@ namespace Tanks3D
 
 			for ( int i = 0; i < _poolSize; ++i )
 			{
-				AddObject();
+				AddObject();                
 			}
 		}
 
-		/// <summary>
-		/// Adds an object to the pool.
-		/// </summary>
-		/// <param name="isActive">Should the object be active when it is added to the pool or not.</param>
-		/// <returns>The object added to the pool.</returns>
-		private T AddObject( bool isActive = false )
+        public Pool(int poolSize, T prefab, bool shouldGrow, Action<T> initMethod) : this(poolSize, prefab, shouldGrow)
+        {
+            _initMethod = initMethod;
+            foreach (var item in _pool)
+            {
+                _initMethod(item);
+            }
+        }
+
+        /// <summary>
+        /// Adds an object to the pool.
+        /// </summary>
+        /// <param name="isActive">Should the object be active when it is added to the pool or not.</param>
+        /// <returns>The object added to the pool.</returns>
+        private T AddObject( bool isActive = false )
 		{
 			// Instantiate pooled objects under this parent.
-			T go = Object.Instantiate( _objectPrefab);
+			T go = UnityEngine.Object.Instantiate( _objectPrefab);
 
 			if ( isActive )
 			{

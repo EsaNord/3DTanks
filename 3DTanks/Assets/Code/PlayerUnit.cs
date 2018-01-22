@@ -17,6 +17,11 @@ namespace Tanks3D
             var input = ReadInput();
             Mover.Turn(input.x);
             Mover.Move(input.z);
+            bool shoot = Input.GetButton("Fire1");
+            if (shoot)
+            {
+                Weapon.Shoot();
+            }
         }
 
         private Vector3 ReadInput()
