@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Tanks3D
 {
@@ -99,5 +100,16 @@ namespace Tanks3D
         }
 
         // GetComponentInHierarchy
+
+        public static bool AddUnique<T>(this IList<T> list, T item)
+        {
+            if (list.Contains(item))
+            {
+                return false;
+            }
+
+            list.Add(item);
+            return true;
+        }
     }
 }

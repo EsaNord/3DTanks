@@ -7,7 +7,7 @@ namespace Tanks3D
     public abstract class Unit : MonoBehaviour
     {
         [SerializeField]
-        private float _moveSpeed;
+        public float _moveSpeed;
 
         [SerializeField]
         private float _turnSpeed;
@@ -18,7 +18,7 @@ namespace Tanks3D
         {
             get;
             protected set;
-        }
+        }          
 
         protected IMover Mover { get { return _mover; } }
 

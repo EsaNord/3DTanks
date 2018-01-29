@@ -15,6 +15,7 @@ namespace Tanks3D
 
         private Weapon _weapon;
         private Rigidbody _rigidBody;
+        private System.Action<Projectile> _collisionCallBack;
 
         public Rigidbody RigidBody
         {
@@ -28,15 +29,16 @@ namespace Tanks3D
             }
         }
 
-        public void Init(Weapon weapon)
+        public void Init(System.Action<Projectile> collisionCallBack)
         {
-            _weapon = weapon;
+            _collisionCallBack = collisionCallBack;
         }
 
-        public void Launch(Vector3 direction)
+        public void Launch(Vector3 direction, float objectSpeed)
         {
-            // TODO Add particle effects
-            RigidBody.AddForce(direction.normalized * _shootingForce, ForceMode.Impulse);
+            // TODO Add particle effects     
+            
+            RigidBody.AddForce(direction.normalized * (_shootingForce + objectSpeed), ForceMode.Impulse);            
         }
 
         protected void OnCollisionEnter(Collision collision)
@@ -44,7 +46,7 @@ namespace Tanks3D
             // TODO Add particle effects
             // TODO apply damage to target            
             RigidBody.velocity = Vector3.zero;
-            _weapon.ProjectileHit(this);
+            _collisionCallBack(this);
             Debug.Log("HIT: " + collision);
         }
     }

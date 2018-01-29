@@ -12,6 +12,8 @@ namespace Tanks3D
         [SerializeField]
         private string _verticalAxis = "Vertical";
 
+        private float movement;
+
         protected override void Update()
         {
             var input = ReadInput();
@@ -20,13 +22,13 @@ namespace Tanks3D
             bool shoot = Input.GetButton("Fire1");
             if (shoot)
             {
-                Weapon.Shoot();
+                Weapon.Shoot(movement);
             }
         }
 
         private Vector3 ReadInput()
         {
-            float movement = Input.GetAxis(_verticalAxis);
+            movement = Input.GetAxis(_verticalAxis);
             float turn = Input.GetAxis(_horizontalAxis);
             return new Vector3(turn, 0, movement);
         }

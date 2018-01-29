@@ -21,15 +21,15 @@ namespace Tanks3D
         public void Init(Unit owner)
         {
             _owner = owner;
-            _projectiles = new Pool<Projectile>(4, _projectilePrefab, false, item => item.Init(this));
+            _projectiles = new Pool<Projectile>(4, _projectilePrefab, false, InitProjectile);
         }
 
-        //private void InitItem(Projectile projectile)
-        //{
-        //    projectile.Init(this);
-        //}
+        private void InitProjectile(Projectile projectile)
+        {
+            projectile.Init(ProjectileHit);
+        }
 
-        public bool Shoot()
+        public bool Shoot(float movement)
         {
             if (!_canShoot)
             {
@@ -39,7 +39,7 @@ namespace Tanks3D
             if (projectile != null)
             {
                 projectile.transform.position = _shootingPoint.position;
-                projectile.Launch(transform.forward);
+                projectile.Launch(transform.forward.normalized, movement * _owner._moveSpeed);
                 _canShoot = false;
             }
             return projectile != null;
@@ -63,7 +63,7 @@ namespace Tanks3D
             }
         }
 
-        public void ProjectileHit(Projectile projectile)
+        private void ProjectileHit(Projectile projectile)
         {            
             if (!_projectiles.ReturnObject(projectile))
             {
