@@ -4,18 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tanks3D.AI;
 using System.Linq;
+using Tanks3D.WaypointSystem;
 
 namespace Tanks3D
 {
     public class EnemyUnit : Unit
     {
-        private IList<AIStateBase> _states = new List<AIStateBase>();
+        [SerializeField]
+        private float _detecEnemyDistance;
+        [SerializeField]
+        private float _shootingDistance;
+        [SerializeField]
+        private float _arriveDistance;
+        [SerializeField]
+        private Path _path;
+        [SerializeField]
+        private Direction direction;
 
-        public AIStateBase CurrentState { get; private set; }        
+        private IList<AIStateBase> _states = new List<AIStateBase>();        
+
+        public AIStateBase CurrentState { get; private set; }     
+        public float DetecEnemyDistance { get { return _detecEnemyDistance; } }
+        public float ShootingDistance { get { return _shootingDistance; } }
+        public PlayerUnit Target { get; set; }        
 
         private void InitStates()
         {
-           
+            PatrolState patrol = new PatrolState(this, _path, direction, _arriveDistance);
+            _states.Add(patrol);
+            CurrentState = patrol;
+            CurrentState.StateActivated();
         }
 
         public override void Init()
@@ -25,8 +43,7 @@ namespace Tanks3D
         }
 
         protected override void Update()
-        {
-            return;
+        {            
             CurrentState.Update();
         }
 

@@ -30,5 +30,26 @@ namespace Tanks3D
             position += movement;
             transform.position = position;
         }
+
+        public void Turn(Vector3 target)
+        {
+            Vector3 direction = target - transform.position;
+            direction.y = transform.position.y;
+            direction = direction.normalized;
+            float turnSpeedInRad = Mathf.Deg2Rad * _turnSpeed * Time.deltaTime;
+
+            Vector3 rotation = Vector3.RotateTowards(transform.forward, direction, turnSpeedInRad, 0);
+            transform.rotation = Quaternion.LookRotation(rotation, transform.up);
+
+            //Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _turnSpeed * Time.deltaTime);           
+        }
+
+        public void Move(Vector3 direction)
+        {
+            direction = direction.normalized;
+            Vector3 position = transform.position + direction * _moveSpeed * Time.deltaTime;            
+            transform.position = position;
+        }
     }
 }

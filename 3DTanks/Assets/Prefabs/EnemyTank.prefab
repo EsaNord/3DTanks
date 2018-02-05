@@ -356,6 +356,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 0
   _turnSpeed: 0
+  _detecEnemyDistance: 0
+  _shootingDistance: 0
+  _arriveDistance: 0
+  _path: {fileID: 0}
 --- !u!114 &114759715338735602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,8 +386,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ab75e1e2e1d1441a70bbe6d6982ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 10
-  _turnSpeed: 70
+  _moveSpeed: 5
+  _turnSpeed: 180
+  _detecEnemyDistance: 5
+  _shootingDistance: 3
+  _arriveDistance: 0.1
+  _path: {fileID: 0}
 --- !u!136 &136317128905877976
 CapsuleCollider:
   m_ObjectHideFlags: 1
