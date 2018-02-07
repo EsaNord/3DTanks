@@ -21,14 +21,19 @@ namespace Tanks3D
 
         public void SetDistance(float distance)
         {
-            float x = distance * Mathf.Sin(m_fAngle);
+            float y = distance * Mathf.Sin(m_fAngle);
             float z = distance * Mathf.Cos(m_fAngle);
+            
+            Debug.Log("X: " + y);
+            Debug.Log("Z: " + z);
 
-            transform.position += new Vector3(0, x, -z);
+            transform.position = transform.position + new Vector3(0 , y, -z);
         }
 
         public void SetTarget(Transform targetTransform)
         {
+            m_tTarget = targetTransform;
+
             transform.position = targetTransform.position;
         }         
     }
