@@ -32,3 +32,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+3DTanks/\.vs/3DTanks/v15/Server/sqlite3/
