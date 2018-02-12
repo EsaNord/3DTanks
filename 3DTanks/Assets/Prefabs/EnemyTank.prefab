@@ -189,7 +189,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1477915894888416}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -3.89, y: 0, z: 39}
+  m_LocalPosition: {x: -3.89, y: 0, z: 44.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4259591301077644}
@@ -356,10 +356,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 0
   _turnSpeed: 0
+  m_iStartingHealth: 0
   _detecEnemyDistance: 0
   _shootingDistance: 0
   _arriveDistance: 0
   _path: {fileID: 0}
+  direction: 0
 --- !u!114 &114759715338735602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,10 +390,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 5
   _turnSpeed: 180
-  _detecEnemyDistance: 5
-  _shootingDistance: 3
+  m_iStartingHealth: 50
+  _detecEnemyDistance: 7
+  _shootingDistance: 4
   _arriveDistance: 0.1
   _path: {fileID: 0}
+  direction: 1
 --- !u!136 &136317128905877976
 CapsuleCollider:
   m_ObjectHideFlags: 1

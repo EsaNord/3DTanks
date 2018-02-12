@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Tanks3D
 {
     public class Projectile : MonoBehaviour
     {        
         [SerializeField]
-        private float _damage;
+        private int m_iDamage;
         [SerializeField]
-        private float _shootingForce;
+        private float m_fShootingForce;
         [SerializeField]
-        private float _explosionForce;
+        private float m_fExplosionForce;
         [SerializeField]
-        private float _explosionRadius;
+        private float m_fExplosionRadius;
+
+        [SerializeField, HideInInspector]
+        private int m_iHitmask;
 
         private Weapon _weapon;
         private Rigidbody _rigidBody;
@@ -38,16 +42,32 @@ namespace Tanks3D
         {
             // TODO Add particle effects     
             
-            RigidBody.AddForce(direction.normalized * (_shootingForce + objectSpeed), ForceMode.Impulse);            
+            RigidBody.AddForce(direction.normalized * (m_fShootingForce + objectSpeed), ForceMode.Impulse);            
         }
 
         protected void OnCollisionEnter(Collision collision)
         {
             // TODO Add particle effects
-            // TODO apply damage to target            
+            ApplyDamage();
             RigidBody.velocity = Vector3.zero;
             _collisionCallBack(this);
             Debug.Log("HIT: " + collision);
+        }
+
+        private void ApplyDamage()
+        {
+            List<IDamageReciever> alreadyDamaged = new List<IDamageReciever>(); 
+            Collider[] damageRecievers = Physics.OverlapSphere(transform.position, m_fExplosionRadius, m_iHitmask);
+            for (int i = 0; i < damageRecievers.Length; i++)
+            {
+                IDamageReciever damageReciever = damageRecievers[i].GetComponentInParent<IDamageReciever>();
+                if (damageReciever != null && !alreadyDamaged.Contains(damageReciever))
+                {
+                    alreadyDamaged.Add(damageReciever);
+                    damageReciever.TakeDamage(m_iDamage);                    
+                    // TODO Add explosion force
+                }
+            }
         }
     }
 }

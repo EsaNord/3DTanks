@@ -356,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 10
   _turnSpeed: 70
+  m_iStartingHealth: 50
   _horizontalAxis: Horizontal
   _verticalAxis: Vertical
 --- !u!114 &114356778726192410

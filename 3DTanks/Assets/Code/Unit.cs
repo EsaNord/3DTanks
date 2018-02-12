@@ -1,16 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tanks3D
 {
-    public abstract class Unit : MonoBehaviour
+    public abstract class Unit : MonoBehaviour, IDamageReciever
     {
         [SerializeField]
         public float _moveSpeed;
-
         [SerializeField]
         private float _turnSpeed;
+        [SerializeField]
+        private int m_iStartingHealth;
 
         private IMover _mover;
 
@@ -22,9 +24,16 @@ namespace Tanks3D
 
         public IMover Mover { get { return _mover; } }
 
+        public Health Health { get; protected set; }
+
         protected void Awake()
         {
             Init();
+        }
+
+        protected void OnDestroy()
+        {
+            Health.UnitDied -= HandleUnitDied;
         }
 
         public virtual void Init()
@@ -37,6 +46,9 @@ namespace Tanks3D
             {
                 Weapon.Init(this);
             }
+
+            Health = new Health(this, m_iStartingHealth);
+            Health.UnitDied += HandleUnitDied;
         }
 
         public virtual void Clear()
@@ -46,5 +58,16 @@ namespace Tanks3D
 
         // An abstract method has to be defined in a non-abstract child class.
         protected abstract void Update();
+
+        public void TakeDamage(int amount)
+        {
+            Health.TakeDamage(amount);
+        }
+
+        protected virtual void HandleUnitDied(Unit unit)
+        {
+            gameObject.SetActive(false);
+            Debug.Log("YOU DIED");
+        }
     }
 }

@@ -74,9 +74,16 @@ namespace Tanks3D.AI
             if (players.Length > 0)
             {
                 PlayerUnit player = players[0].gameObject.GetComponentInHierarchy<PlayerUnit>();
-                Owner.Target = player;
-                Owner.PerformTransition(AIStateType.FollowTarget);
-                return true;
+
+                if (player != null)
+                {
+                    Owner.Target = player;
+                    float sqrDistanceToPlayer = Owner.ToTargetVector.Value.sqrMagnitude;
+                    if (sqrDistanceToPlayer < Owner.DetecEnemyDistance * Owner.DetecEnemyDistance)
+                        return Owner.PerformTransition(AIStateType.FollowTarget);
+
+                    Owner.Target = null;
+                }                            
             }
             return false;
         }

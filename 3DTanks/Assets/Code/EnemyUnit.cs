@@ -26,12 +26,25 @@ namespace Tanks3D
         public AIStateBase CurrentState { get; private set; }     
         public float DetecEnemyDistance { get { return _detecEnemyDistance; } }
         public float ShootingDistance { get { return _shootingDistance; } }
-        public PlayerUnit Target { get; set; }        
+        public PlayerUnit Target { get; set; }  
+        public Vector3? ToTargetVector
+        {
+            get
+            {
+                if (Target != null)
+                {
+                    return Target.transform.position - transform.position;
+                }
+                return null;
+            }
+        }
 
         private void InitStates()
         {
             PatrolState patrol = new PatrolState(this, _path, direction, _arriveDistance);
+            FollowTargetState followTarget = new FollowTargetState(this);
             _states.Add(patrol);
+            _states.Add(followTarget);
             CurrentState = patrol;
             CurrentState.StateActivated();
         }
