@@ -25,7 +25,9 @@ namespace Tanks3D
         {
             cameraFollow.SetTarget(m_tTarget);
             cameraFollow.SetAngle(m_fAngle);
-            cameraFollow.SetDistance(m_fDistance);                    
+            cameraFollow.SetDistance(m_fDistance);
+
+            Debug.Log("Distance: " + Vector3.Distance(transform.position, m_tTarget.position));
         }
     }
 }

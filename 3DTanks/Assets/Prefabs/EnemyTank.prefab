@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 33459203386873674}
   - component: {fileID: 136317128905877976}
   - component: {fileID: 23680076991845050}
-  - component: {fileID: 114475734439605062}
   m_Layer: 9
   m_Name: Barrel
   m_TagString: Untagged
@@ -343,25 +342,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114475734439605062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1863384195658780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ab75e1e2e1d1441a70bbe6d6982ff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 0
-  _turnSpeed: 0
-  m_iStartingHealth: 0
-  _detecEnemyDistance: 0
-  _shootingDistance: 0
-  _arriveDistance: 0
-  _path: {fileID: 0}
-  direction: 0
 --- !u!114 &114759715338735602
 MonoBehaviour:
   m_ObjectHideFlags: 1

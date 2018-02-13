@@ -15,7 +15,7 @@ namespace Tanks3D.AI
 
         public Waypoint CurrentWaypoint { get; private set; }
 
-        public PatrolState(EnemyUnit owner, Path path, Direction direction, float arriveDistance) : base() // Calls base constructor
+        public PatrolState(EnemyUnit owner, Path path, Direction direction, float arriveDistance) : base()
         {
             State = AIStateType.Patrol;
             Owner = owner;
