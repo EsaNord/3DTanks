@@ -66,8 +66,7 @@ namespace Tanks3D
 
         protected virtual void HandleUnitDied(Unit unit)
         {
-            gameObject.SetActive(false);
-            Debug.Log("YOU DIED");
+            gameObject.SetActive(false);            
         }
     }
 }

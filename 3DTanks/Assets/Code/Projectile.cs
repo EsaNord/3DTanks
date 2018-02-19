@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tanks3D
 {
     public class Projectile : MonoBehaviour
     {        
-        [SerializeField]
+        [SerializeField, Range(0, 100)]
         private int m_iDamage;
         [SerializeField]
         private float m_fShootingForce;
@@ -17,9 +18,21 @@ namespace Tanks3D
         [SerializeField, HideInInspector]
         private int m_iHitmask;
 
+        [SerializeField]
+        private ProjectileType type;
+
         private Weapon _weapon;
         private Rigidbody _rigidBody;
         private System.Action<Projectile> _collisionCallBack;
+
+        [Flags]
+        public enum ProjectileType
+        {
+            none = 0,
+            player = 1,
+            enemy = 1 << 1,
+            neutral = 1 << 2
+        }
 
         public Rigidbody RigidBody
         {

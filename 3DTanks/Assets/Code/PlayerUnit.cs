@@ -13,7 +13,7 @@ namespace Tanks3D
         private string _verticalAxis = "Vertical";
 
         private float movement;
-
+        
         protected override void Update()
         {
             var input = ReadInput();
