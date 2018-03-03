@@ -29,7 +29,7 @@ namespace Tanks3D
             projectile.Init(ProjectileHit);
         }
 
-        public bool Shoot(float movement)
+        public bool Shoot()
         {
             if (!_canShoot)
             {
@@ -39,7 +39,7 @@ namespace Tanks3D
             if (projectile != null)
             {
                 projectile.transform.position = _shootingPoint.position;
-                projectile.Launch(transform.forward.normalized, movement * _owner._moveSpeed);
+                projectile.Launch(transform.forward);
                 _canShoot = false;
             }
             return projectile != null;

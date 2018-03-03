@@ -9,7 +9,7 @@ namespace Tanks3D
     {
         public event Action<Unit> UnitDied;
 
-        public int CurrentHealth { get; private set; }
+        public int CurrentHealth { get; protected set; }
         public Unit Owner { get; private set; }
 
         public Health(Unit owner, int startingHealth)
@@ -18,15 +18,28 @@ namespace Tanks3D
             CurrentHealth = startingHealth;
         }
 
-        public bool TakeDamage(int amount)
+        /// <summary>
+        /// Applies damage to the Unit.
+        /// </summary>
+        /// <param name="damage">Amount of damage</param>
+        /// <returns>True, if the unit dies. False otherwise</returns>
+        public virtual bool TakeDamage(int damage)
         {
-            CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0, CurrentHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, CurrentHealth);
             bool didDie = CurrentHealth == 0;
-            if (didDie && UnitDied != null)
+            if (didDie)
+            {
+                RaiseUnitDiedEvent();
+            }
+            return didDie;
+        }
+
+        protected void RaiseUnitDiedEvent()
+        {
+            if (UnitDied != null)
             {
                 UnitDied(Owner);
             }
-            return didDie;
         }
     }
 }

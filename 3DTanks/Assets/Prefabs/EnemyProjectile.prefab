@@ -111,11 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5da875a399d384fa81ad60f711f85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_iDamage: 5
-  m_fShootingForce: 30
-  m_fExplosionForce: 50
-  m_fExplosionRadius: 3
-  m_iHitmask: 1696
+  _damage: 10
+  _shootingForce: 25
+  _explosionForce: 50
+  _explosionRadius: 3
+  _hitMask: 1280
 --- !u!135 &135045461017454082
 SphereCollider:
   m_ObjectHideFlags: 1

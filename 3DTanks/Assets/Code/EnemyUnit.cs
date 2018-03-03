@@ -43,8 +43,10 @@ namespace Tanks3D
         {
             PatrolState patrol = new PatrolState(this, _path, direction, _arriveDistance);
             FollowTargetState followTarget = new FollowTargetState(this);
+            ShootState shoot = new ShootState(this);
             _states.Add(patrol);
             _states.Add(followTarget);
+            _states.Add(shoot);
             CurrentState = patrol;
             CurrentState.StateActivated();
         }
@@ -66,8 +68,10 @@ namespace Tanks3D
             {
                 return false;
             }
+
             bool result = false;
             AIStateBase state = GetStateByType(targetState);
+            
             if (state != null)
             {
                 CurrentState.StateDeactivating();
@@ -81,13 +85,14 @@ namespace Tanks3D
 
         private AIStateBase GetStateByType(AIStateType stateType)
         {
-            //foreach (AIStateBase state in _states)
+            //foreach ( AIStateBase state in _states )
             //{
-            //    if (state.State == stateType)
-            //    {
-            //        return state;
-            //    }
+            //	if ( state.State == stateType )
+            //	{
+            //		return state;
+            //	}
             //}
+            //return null;
 
             return _states.FirstOrDefault(state => state.State == stateType);
         } 

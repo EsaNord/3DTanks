@@ -8,7 +8,7 @@ namespace Tanks3D.Editor
     [CustomEditor(typeof(Projectile))]
     public class ProjectileInspector : UnityEditor.Editor
     {
-        private const string HitMaskName = "m_iHitmask";
+        private const string HitMaskName = "_hitMask";
         private SerializedProperty _hitMaskProperty;
 
         protected void OnEnable()
@@ -23,15 +23,14 @@ namespace Tanks3D.Editor
             EditorGUILayout.BeginVertical();
 
             List<string> labels = new List<string>(32);
-            for (int i = 0; i <32; i++)
+            for (int i = 0; i < 32; ++i)
             {
-                string layerName = LayerMask.LayerToName(i);
-
-                if (layerName.Length > 0)
-                    labels.Add(LayerMask.LayerToName(i));
+                labels.Add(LayerMask.LayerToName(i));
             }
 
-            _hitMaskProperty.intValue = EditorGUILayout.MaskField("Hit layers", _hitMaskProperty.intValue, labels.ToArray());
+            _hitMaskProperty.intValue = EditorGUILayout.MaskField("Hit layers",
+                _hitMaskProperty.intValue, labels.ToArray());
+
             serializedObject.ApplyModifiedProperties();
 
             EditorGUILayout.EndVertical();

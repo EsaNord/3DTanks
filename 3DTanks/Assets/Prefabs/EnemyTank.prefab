@@ -371,8 +371,8 @@ MonoBehaviour:
   _moveSpeed: 5
   _turnSpeed: 180
   m_iStartingHealth: 50
-  _detecEnemyDistance: 7
-  _shootingDistance: 4
+  _detecEnemyDistance: 10
+  _shootingDistance: 6
   _arriveDistance: 0.1
   _path: {fileID: 0}
   direction: 1
