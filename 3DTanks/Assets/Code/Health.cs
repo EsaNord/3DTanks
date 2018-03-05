@@ -41,5 +41,10 @@ namespace Tanks3D
                 UnitDied(Owner);
             }
         }
+
+        public void SetHealth(int health)
+        {
+
+        }
     }
 }

@@ -8,5 +8,15 @@
         {
             _persistance = persistance;
         }
+
+        public void Save (GameData data)
+        {
+            _persistance.Save<GameData>(data);
+        }
+
+        public GameData Load()
+        {
+            return _persistance.Load<GameData>();
+        }
     }
 }

@@ -6,13 +6,14 @@ using UnityEngine;
 namespace Tanks3D.Editor
 {
     [CustomEditor(typeof(EnemyUnit))]
-    public class EnemyUnitInspector : UnityEditor.Editor
+    public class EnemyUnitInspector : UnitInspector
     {
         private EnemyUnit m_euTarget;
         private int m_iDamageAmount = 10;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             m_euTarget = target as EnemyUnit;
         }
 

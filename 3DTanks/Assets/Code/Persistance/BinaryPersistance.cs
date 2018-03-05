@@ -7,7 +7,7 @@ namespace Tanks3D.persistance
 {
     public class BinaryPersistance : IPersistance
     {
-        public string Extension { get { return "/bin"; } }
+        public string Extension { get { return ".bin"; } }
 
         public string FilePath { get; private set; }
 
@@ -33,18 +33,23 @@ namespace Tanks3D.persistance
         public T Load<T>()
         {
             T data = default(T);
-            try
+            if (File.Exists(FilePath))
             {
-                using (FileStream stream = File.OpenRead(FilePath))
+                FileStream stream = File.OpenRead(FilePath);
+
+                try
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     data = (T)bf.Deserialize(stream);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+                finally
+                {
                     stream.Close();
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
             }
             return data;
         }
