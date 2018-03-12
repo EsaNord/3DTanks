@@ -46,6 +46,9 @@ namespace Tanks3D
 
         private void Init()
         {
+            var UI = FindObjectOfType<UI.UI>();
+            UI.Init();
+
             Unit[] allUnits = FindObjectsOfType<Unit>();
 
             foreach (Unit unit in allUnits)
@@ -53,8 +56,8 @@ namespace Tanks3D
                 AddUnit(unit);
             }            
 
-            //_saveSystem = new SaveSystem(new BinaryPersistance(SavePath));
-            _saveSystem = new SaveSystem(new JSONPersistence(SavePath));
+            _saveSystem = new SaveSystem(new BinaryPersistance(SavePath));
+            //_saveSystem = new SaveSystem(new JSONPersistence(SavePath));
         }
 
         protected void Update()
@@ -70,6 +73,8 @@ namespace Tanks3D
 
         private void AddUnit(Unit unit)
         {
+            unit.Init();
+
             if (unit is EnemyUnit)
             {
                 m_lEnemyUnits.Add(unit);
@@ -78,6 +83,8 @@ namespace Tanks3D
             {
                 m_uPlayerUnit = unit;
             }
+            
+            UI.UI.Current.HealthUI.AddUnit(unit);
         }
 
         public void Save()

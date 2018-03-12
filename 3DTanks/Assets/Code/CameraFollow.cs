@@ -27,7 +27,13 @@ namespace Tanks3D
 
         private void LateUpdate()
         {
-            UpdatePosition();
+            //UpdatePosition();
+
+            if (m_tTarget != null)
+            {
+                transform.position = CalculatePosition();
+                transform.eulerAngles = CalculateDirection();
+            }
         }
 
         private void UpdatePosition()
@@ -64,6 +70,24 @@ namespace Tanks3D
             // and sets it to look at player.
             transform.position = cameraPos;
             transform.LookAt(m_tTarget);
+        }
+
+        private Vector3 CalculatePosition()
+        {
+            float angle = Mathf.Deg2Rad * m_fAngle;
+            float horizontal = Mathf.Sin(angle) * m_fDistance;
+            float y = Mathf.Cos(angle) * m_fDistance;
+
+            return m_tTarget.position + m_tTarget.forward * -1 * horizontal + m_tTarget.up * y;
+        }
+
+        private Vector3 CalculateDirection()
+        {
+            Vector3 rotation = transform.eulerAngles;
+            rotation.y = m_tTarget.eulerAngles.y;
+            rotation.x = 90 - m_fAngle;
+
+            return rotation;
         }
     }
 }

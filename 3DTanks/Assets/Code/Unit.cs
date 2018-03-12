@@ -43,11 +43,6 @@ namespace Tanks3D
         public Health Health { get; protected set; }
         public int Id { get { return _id; } private set { _id = value; } }
 
-        protected void Awake()
-        {
-            Init();
-        }
-
         protected void OnDestroy()
         {
             Health.UnitDied -= HandleUnitDied;

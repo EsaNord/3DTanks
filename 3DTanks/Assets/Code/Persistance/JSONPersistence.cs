@@ -23,9 +23,9 @@ namespace Tanks3D.persistance
         }
 
         public void Save<T>(T data)
-        {
+        { 
             string jsonData = JsonUtility.ToJson(data, prettyPrint: true);
-            File.WriteAllText(FilePath, jsonData, Encoding.UTF8);
+            File.WriteAllText(FilePath, jsonData, Encoding.UTF8);            
         }
     }
 }

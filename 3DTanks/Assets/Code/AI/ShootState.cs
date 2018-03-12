@@ -27,6 +27,20 @@ namespace Tanks3D.AI
         public override void StateActivated()
         {
             base.StateActivated();
+
+            Owner.Target.Health.UnitDied += OnTargetDied;
+        }
+
+        public void OnTargetDied(Unit target)
+        {
+            Owner.PerformTransition(AIStateType.Patrol);
+            Owner.Target = null;
+        }
+
+        public override void StateDeactivating()
+        {
+            base.StateDeactivating();
+            Owner.Target.Health.UnitDied -= OnTargetDied;
         }
 
         /// <summary>
@@ -51,9 +65,9 @@ namespace Tanks3D.AI
 
             // If player unit dies or otherwise is no longer in game,
             // current state is changed to patrol state.
-            if (Owner.Target == null)
-                return Owner.PerformTransition(AIStateType.Patrol);
-            
+            //if (Owner.Target == null)
+            //    return Owner.PerformTransition(AIStateType.Patrol);
+
             // If player moves out of shooting range, current state is changed to
             // follow target state.
             if (sqrDistanceToPlayer > SqrShootingDistance)

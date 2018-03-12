@@ -7,9 +7,21 @@ namespace Tanks3D
 {
     public class Health
     {
-        public event Action<Unit> UnitDied;
+        private int _currentHealth;
 
-        public int CurrentHealth { get; protected set; }
+        public event Action<Unit> UnitDied;
+        public event Action<Unit, int> HealthChanged;
+        
+        public int CurrentHealth {
+            get { return _currentHealth; }
+            protected set { _currentHealth = value;
+                if (HealthChanged != null)
+                {
+                    HealthChanged(Owner, _currentHealth);
+                }
+            }
+        }
+
         public Unit Owner { get; private set; }
 
         public Health(Unit owner, int startingHealth)

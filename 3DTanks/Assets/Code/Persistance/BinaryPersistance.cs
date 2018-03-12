@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -22,9 +23,20 @@ namespace Tanks3D.persistance
 
         public void Save<T>(T data)
         {
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
+            }
             using (FileStream stream = File.OpenWrite(FilePath))
             {
                 BinaryFormatter bf = new BinaryFormatter();
+
+                var surrogateSelector = new SurrogateSelector();
+                Vector3Surrogate v3S = new Vector3Surrogate();
+                surrogateSelector.AddSurrogate(typeof(Vector3),
+                    new StreamingContext(StreamingContextStates.All), v3S);
+                bf.SurrogateSelector = surrogateSelector;
+
                 bf.Serialize(stream, data);
                 stream.Close();
             }
@@ -40,7 +52,18 @@ namespace Tanks3D.persistance
                 try
                 {
                     BinaryFormatter bf = new BinaryFormatter();
+
+                    var surrogateSelector = new SurrogateSelector();
+                    Vector3Surrogate v3S = new Vector3Surrogate();
+                    surrogateSelector.AddSurrogate(typeof(Vector3),
+                        new StreamingContext(StreamingContextStates.All), v3S);
+                    bf.SurrogateSelector = surrogateSelector;
+
                     data = (T)bf.Deserialize(stream);
+                }
+                catch (SerializationException e)
+                {
+                    Debug.LogError("Serialization Failed");
                 }
                 catch (Exception e)
                 {
