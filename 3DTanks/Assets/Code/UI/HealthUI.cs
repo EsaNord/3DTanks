@@ -11,7 +11,7 @@ namespace Tanks3D.UI
 
         public void Init()
         {
-            Debug.LogError("Health UI Initialized");
+            Debug.Log("Health UI Initialized");
         }
 
         public void AddUnit(Unit unit)

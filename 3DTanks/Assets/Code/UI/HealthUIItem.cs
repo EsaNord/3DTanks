@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tanks3D.Messaging;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace Tanks3D.UI
     {
         private Unit _unit;
         private Text _text;
+        private ISubscription<UnitDiedMessage> _unitDiedsubscription;
 
         public bool IsEnemy { get { return _unit != null && _unit is EnemyUnit; } }
 
@@ -18,7 +20,8 @@ namespace Tanks3D.UI
             _text = GetComponentInChildren<Text>();
             _text.color = IsEnemy ? Color.red : Color.green;
             _unit.Health.HealthChanged += OnUnitHealtChanged;
-            _unit.Health.UnitDied += OnUnitDied;
+            //_unit.Health.UnitDied += OnUnitDied;
+            _unitDiedsubscription = GameManager.Instance.MessageBus.Subscribe<UnitDiedMessage>(OnUnitDied);
             SetText(_unit.Health.CurrentHealth);
         }
 
@@ -27,15 +30,17 @@ namespace Tanks3D.UI
             UnregisterEventListeners();
         }
 
-        private void OnUnitDied(Unit obj)
+        private void OnUnitDied(UnitDiedMessage obj)
         {
-            UnregisterEventListeners();
+            if (obj.DeadUnit == _unit)
+               UnregisterEventListeners();
         }
 
         private void UnregisterEventListeners()
         {
             _unit.Health.HealthChanged -= OnUnitHealtChanged;
-            _unit.Health.UnitDied -= OnUnitDied;
+            GameManager.Instance.MessageBus.UnSubscribe(_unitDiedsubscription);
+            //_unit.Health.UnitDied -= OnUnitDied;
         }
 
         private void OnUnitHealtChanged(Unit unit, int health)

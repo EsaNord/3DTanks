@@ -1,5 +1,6 @@
 ﻿using Tanks3D.persistance;
 using UnityEngine;
+using Tanks3D.Messaging;
 
 namespace Tanks3D
 {
@@ -86,6 +87,7 @@ namespace Tanks3D
 
         protected virtual void HandleUnitDied(Unit unit)
         {
+            GameManager.Instance.MessageBus.Publish(new UnitDiedMessage(this));
             gameObject.SetActive(false);            
         }
 

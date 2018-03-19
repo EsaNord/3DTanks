@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Tanks3D.persistance;
+using Tanks3D.Messaging;
 
 namespace Tanks3D
 {
     public class GameManager : MonoBehaviour
     {
-#region Static
+        #region Static
+
         private static GameManager m_gmInstance;
 
         public static GameManager Instance
         {
             get
             {
-                if (m_gmInstance == null)
+                if (m_gmInstance == null && !IsClosing)
                 {
                     GameObject gameManagerObject = new GameObject(typeof(GameManager).Name);
                     m_gmInstance = gameManagerObject.AddComponent<GameManager>();
@@ -23,12 +25,18 @@ namespace Tanks3D
                 return m_gmInstance;
             }
         }
-#endregion
+
+        public static bool IsClosing { get; private set; }
+
+        #endregion
+
         private List<Unit> m_lEnemyUnits = new List<Unit>();
         private Unit m_uPlayerUnit;
         private SaveSystem _saveSystem;
 
         public string SavePath { get { return Path.Combine(Application.persistentDataPath, "save"); } }
+
+        public MessageBus MessageBus { get; private set; }        
 
         protected void Awake()
         {
@@ -44,8 +52,15 @@ namespace Tanks3D
             Init();
         }
 
+        private void OnApplicationQuit()
+        {
+            IsClosing = true;
+        }
+
         private void Init()
         {
+            MessageBus = new MessageBus();
+
             var UI = FindObjectOfType<UI.UI>();
             UI.Init();
 
