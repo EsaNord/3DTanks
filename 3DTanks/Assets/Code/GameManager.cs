@@ -4,6 +4,8 @@ using UnityEngine;
 using System.IO;
 using Tanks3D.persistance;
 using Tanks3D.Messaging;
+using Tanks3D.Localization;
+using L10n = Tanks3D.Localization.Localization;
 
 namespace Tanks3D
 {
@@ -59,6 +61,8 @@ namespace Tanks3D
 
         private void Init()
         {
+            IsClosing = false;
+
             MessageBus = new MessageBus();
 
             var UI = FindObjectOfType<UI.UI>();
