@@ -27,7 +27,7 @@ namespace Tanks3D
         public Health(Unit owner, int startingHealth)
         {
             Owner = owner;
-            CurrentHealth = startingHealth;
+            CurrentHealth = startingHealth;           
         }
 
         /// <summary>
@@ -57,6 +57,6 @@ namespace Tanks3D
         public void SetHealth(int health)
         {
 
-        }
+        }        
     }
 }

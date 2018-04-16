@@ -1,1 +1,1 @@
-﻿{"_keys":["save","load","delete"],"_values":["Save","Load","Delete"],"_langCode":1}
+﻿{"_keys":["save","load","delete","start","health","player","enemy"],"_values":["Save","Load","Delete","Start","{0} Health {1}","Player","Enemy"],"_langCode":1}

@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Tanks3D.Localization;
 using Tanks3D.Messaging;
 using UnityEngine;
 using UnityEngine.UI;
+using L10n = Tanks3D.Localization.Localization;
 
 namespace Tanks3D.UI
 {
@@ -11,6 +13,7 @@ namespace Tanks3D.UI
         private Unit _unit;
         private Text _text;
         private ISubscription<UnitDiedMessage> _unitDiedsubscription;
+        private const string HealthKey = "health";        
 
         public bool IsEnemy { get { return _unit != null && _unit is EnemyUnit; } }
 
@@ -20,6 +23,7 @@ namespace Tanks3D.UI
             _text = GetComponentInChildren<Text>();
             _text.color = IsEnemy ? Color.red : Color.green;
             _unit.Health.HealthChanged += OnUnitHealtChanged;
+            L10n.LanguageLoaded += OnLanguageChange;
             //_unit.Health.UnitDied += OnUnitDied;
             _unitDiedsubscription = GameManager.Instance.MessageBus.Subscribe<UnitDiedMessage>(OnUnitDied);
             SetText(_unit.Health.CurrentHealth);
@@ -33,12 +37,16 @@ namespace Tanks3D.UI
         private void OnUnitDied(UnitDiedMessage obj)
         {
             if (obj.DeadUnit == _unit)
-               UnregisterEventListeners();
+            {
+                UnregisterEventListeners();
+                gameObject.SetActive(false);
+            }
         }
 
         private void UnregisterEventListeners()
         {
             _unit.Health.HealthChanged -= OnUnitHealtChanged;
+            L10n.LanguageLoaded -= OnLanguageChange;
             GameManager.Instance.MessageBus.UnSubscribe(_unitDiedsubscription);
             //_unit.Health.UnitDied -= OnUnitDied;
         }
@@ -48,9 +56,18 @@ namespace Tanks3D.UI
             SetText(health);
         }
 
+        private void OnLanguageChange()
+        {
+            SetText(_unit.Health.CurrentHealth);
+        }
+
         private void SetText(int health)
         {
-            _text.text = string.Format("{0} health: {1}", _unit.name, health);
+            string UnitKey = IsEnemy? "enemy" : "player";
+
+            string translation = L10n.CurrentLanguage.GetTranslation(HealthKey);
+            string unitTranslation = L10n.CurrentLanguage.GetTranslation(UnitKey);
+            _text.text = string.Format(translation, unitTranslation, health);
         }
     }
 }

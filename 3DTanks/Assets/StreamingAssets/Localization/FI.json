@@ -1,1 +1,1 @@
-﻿{"_keys":["save","load","delete"],"_values":["Tallenna","Lataa","Poista"],"_langCode":2}
+﻿{"_keys":["save","load","delete","start","health","player","enemy"],"_values":["Tallenna","Lataa","Poista","Aloita","{0} Elämäpisteet {1}","Pelaaja","Vihollinen"],"_langCode":2}
