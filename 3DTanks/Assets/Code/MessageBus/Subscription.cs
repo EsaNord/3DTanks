@@ -32,5 +32,10 @@ namespace Tanks3D.Messaging
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        ~Subscription()
+        {
+            Dispose(false);
+        }
     }
 }

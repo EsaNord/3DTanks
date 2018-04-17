@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using JetBrains.Annotations;
+using System.Linq.Expressions;
+using System.ComponentModel;
 
 namespace Tanks3D
 {
@@ -19,6 +22,7 @@ namespace Tanks3D
                 {
                     HealthChanged(Owner, _currentHealth);
                 }
+                OnPropertyChanged(() => CurrentHealth);
             }
         }
 
@@ -56,7 +60,16 @@ namespace Tanks3D
 
         public void SetHealth(int health)
         {
+            CurrentHealth = health;
+        }
 
-        }        
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> propertyLambda)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(Utils.Utils.GetPropertyName(propertyLambda)));
+        }
     }
 }

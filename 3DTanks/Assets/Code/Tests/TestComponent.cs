@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Tanks3D.Testing
 {
     public class TestComponent : MonoBehaviour
-    {
-        // Wololoo        
+    {        
     }
 }

@@ -7,7 +7,7 @@ namespace Tanks3D.persistance
 {
     public class JSONPersistence : IPersistance
     {
-        public string Extension { get { return "json"; } }
+        public string Extension { get { return ".json"; } }
 
         public string FilePath { get; private set; }
 

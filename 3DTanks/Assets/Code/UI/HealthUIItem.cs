@@ -19,11 +19,13 @@ namespace Tanks3D.UI
 
         public void Init(Unit unit)
         {
+            L10n.LanguageLoaded += OnLanguageChange;
             _unit = unit;
             _text = GetComponentInChildren<Text>();
+
             _text.color = IsEnemy ? Color.red : Color.green;
             _unit.Health.HealthChanged += OnUnitHealtChanged;
-            L10n.LanguageLoaded += OnLanguageChange;
+            
             //_unit.Health.UnitDied += OnUnitDied;
             _unitDiedsubscription = GameManager.Instance.MessageBus.Subscribe<UnitDiedMessage>(OnUnitDied);
             SetText(_unit.Health.CurrentHealth);
@@ -47,7 +49,9 @@ namespace Tanks3D.UI
         {
             _unit.Health.HealthChanged -= OnUnitHealtChanged;
             L10n.LanguageLoaded -= OnLanguageChange;
-            GameManager.Instance.MessageBus.UnSubscribe(_unitDiedsubscription);
+
+            if (!GameManager.IsClosing)
+                GameManager.Instance.MessageBus.UnSubscribe(_unitDiedsubscription);
             //_unit.Health.UnitDied -= OnUnitDied;
         }
 
@@ -56,7 +60,7 @@ namespace Tanks3D.UI
             SetText(health);
         }
 
-        private void OnLanguageChange()
+        private void OnLanguageChange( LangCode currentLang)
         {
             SetText(_unit.Health.CurrentHealth);
         }
@@ -67,6 +71,7 @@ namespace Tanks3D.UI
 
             string translation = L10n.CurrentLanguage.GetTranslation(HealthKey);
             string unitTranslation = L10n.CurrentLanguage.GetTranslation(UnitKey);
+
             _text.text = string.Format(translation, unitTranslation, health);
         }
     }

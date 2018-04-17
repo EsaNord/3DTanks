@@ -18,7 +18,7 @@ namespace Tanks3D.persistance
         {
             Vector3 vector = (Vector3)obj;
             vector.x = info.GetSingle("x");
-            vector.y = info.GetSingle("y");
+            vector.y = (float)info.GetValue("y", typeof(float));
             vector.z = info.GetSingle("z");
             return vector;
         }

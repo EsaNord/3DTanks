@@ -17,7 +17,7 @@ namespace Tanks3D.Localization
         public const string LocalizationFolderName = "Localization";
         public const string FileExtension = ".json";
 
-        public static event Action LanguageLoaded;
+        public static event Action<LangCode> LanguageLoaded;
 
         public static string LocalizationPath
         {
@@ -60,7 +60,7 @@ namespace Tanks3D.Localization
             }
 
             if (LanguageLoaded != null)
-                LanguageLoaded();
+                LanguageLoaded(CurrentLanguage.LanguageCode);
         }
 
         public static void CreateLanguage(LangCode langCode)

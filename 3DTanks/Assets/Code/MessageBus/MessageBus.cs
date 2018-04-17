@@ -33,12 +33,7 @@ namespace Tanks3D.Messaging
 
         public void Clear()
         {
-            Dictionary<Type, IList> copyDictionary = new Dictionary<Type, IList>(_subscriptions);
-
-            foreach (var kvp in copyDictionary)
-            {
-                _subscriptions.Remove(kvp.Key);
-            }            
+            _subscriptions.Clear();
         }
 
         public void Publish<TMessage>(TMessage message) where TMessage : IMessage

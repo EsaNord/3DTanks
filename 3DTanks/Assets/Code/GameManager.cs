@@ -35,6 +35,7 @@ namespace Tanks3D
         private List<Unit> m_lEnemyUnits = new List<Unit>();
         private Unit m_uPlayerUnit;
         private SaveSystem _saveSystem;
+
         private const string LanguageKey = "Language";
 
         public string SavePath { get { return Path.Combine(Application.persistentDataPath, "save"); } }
@@ -67,24 +68,21 @@ namespace Tanks3D
 
         private void Init()
         {
-            IsClosing = false;
             InitLocalization();
+            IsClosing = false;            
             MessageBus = new MessageBus();
 
             var UI = FindObjectOfType<UI.UI>();
             UI.Init();
 
             Unit[] allUnits = FindObjectsOfType<Unit>();
-
             foreach (Unit unit in allUnits)
             {
                 AddUnit(unit);
             }            
 
             _saveSystem = new SaveSystem(new BinaryPersistance(SavePath));
-            //_saveSystem = new SaveSystem(new JSONPersistence(SavePath));
-
-           
+            //_saveSystem = new SaveSystem(new JSONPersistence(SavePath));           
         }
 
         protected void Update()
@@ -147,9 +145,9 @@ namespace Tanks3D
             L10n.LanguageLoaded += OnLanguageLoaded;
         }
 
-        private void OnLanguageLoaded()
+        private void OnLanguageLoaded(LangCode currentLanguage)
         {
-            PlayerPrefs.SetInt(LanguageKey, (int)L10n.CurrentLanguage.LanguageCode);
+            PlayerPrefs.SetInt(LanguageKey, (int)currentLanguage);
         }
     }
 }

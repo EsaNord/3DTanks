@@ -32,7 +32,7 @@ namespace Tanks3D
         public static TComponent GetComponentInInactiveParents<TComponent>(this GameObject gameObject)
             where TComponent : Component
         {
-            return GetComponentInInactiveParentsRecursive<TComponent>(gameObject);
+            return gameObject.GetComponentInInactiveParentsRecursive<TComponent>();
         }
 
         private static TComponent GetComponentInInactiveParentsIterative<TComponent>(this GameObject gameObject)
@@ -78,7 +78,7 @@ namespace Tanks3D
         private static TComponent GetComponentInActiveHierarchy<TComponent>(this GameObject gameObject)
             where TComponent : Component
         {
-            TComponent result = gameObject.GetComponentInChildren<TComponent>(false);
+            TComponent result = gameObject.GetComponentInChildren<TComponent>(includeInactive: false);
             if (result == null)
             {
                 result = gameObject.GetComponentInParent<TComponent>();
@@ -90,7 +90,7 @@ namespace Tanks3D
         private static TComponent GetComponentInInactiveHierarchy<TComponent>(this GameObject gameObject)
             where TComponent : Component
         {
-            TComponent result = gameObject.GetComponentInChildren<TComponent>(true);
+            TComponent result = gameObject.GetComponentInChildren<TComponent>(includeInactive: true);
             if (result == null)
             {
                 result = gameObject.GetComponentInInactiveParents<TComponent>();

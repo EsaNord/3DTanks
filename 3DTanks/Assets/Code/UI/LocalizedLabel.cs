@@ -19,10 +19,10 @@ namespace Tanks3D.UI
 
         private void Start()
         {
-            OnLanguageLoaded();
+            OnLanguageLoaded(L10n.CurrentLanguage.LanguageCode);
         }
 
-        private void OnLanguageLoaded()
+        private void OnLanguageLoaded(LangCode currentLanguage)
         {
             _text.text = L10n.CurrentLanguage.GetTranslation(_key);
         }

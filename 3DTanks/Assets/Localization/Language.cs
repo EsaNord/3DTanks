@@ -53,6 +53,7 @@ namespace Tanks3D.Localization
 
             return result;
         }
+
 #if UNITY_EDITOR
         public void SetValues(Dictionary<string, string> translations)
         {
