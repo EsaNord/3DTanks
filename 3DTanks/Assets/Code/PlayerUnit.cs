@@ -10,7 +10,7 @@ namespace Tanks3D
         [SerializeField]
         private string _horizontalAxis = "Horizontal";
         [SerializeField]
-        private string _verticalAxis = "Vertical";        
+        private string _verticalAxis = "Vertical"; 
         
         protected override void Update()
         {

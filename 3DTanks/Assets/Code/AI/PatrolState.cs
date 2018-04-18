@@ -28,7 +28,8 @@ namespace Tanks3D.AI
         public override void StateActivated()
         {
             base.StateActivated();
-            CurrentWaypoint = _path.GetClosestWaypoint(Owner.transform.position);            
+            CurrentWaypoint = _path.GetClosestWaypoint(Owner.transform.position);
+            Debug.Log("Patrol");
         }
 
         public override void Update()

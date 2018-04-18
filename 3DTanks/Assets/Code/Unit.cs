@@ -27,7 +27,11 @@ namespace Tanks3D
         [SerializeField]
         private float _turnSpeed;
         [SerializeField]
-        private int m_iStartingHealth;
+        private int _startingHealth;
+        [SerializeField, Tooltip("Units spawn point")]
+        private Transform _spawnPoint;
+        [SerializeField, Tooltip("Player lives")]
+        private int _lives;
         [SerializeField, HideInInspector]
         private int _id = -1;
 
@@ -43,6 +47,8 @@ namespace Tanks3D
 
         public Health Health { get; protected set; }
         public int Id { get { return _id; } private set { _id = value; } }
+        public int StartingHealth { get { return _startingHealth; } }
+        public Vector3 SpawnPoint { get { return _spawnPoint.position; } }
 
         protected void OnDestroy()
         {
@@ -60,7 +66,7 @@ namespace Tanks3D
                 Weapon.Init(this);
             }
 
-            Health = new Health(this, m_iStartingHealth);
+            Health = new Health(this, _startingHealth, _lives);
             Health.UnitDied += HandleUnitDied;
         }
 
@@ -85,9 +91,14 @@ namespace Tanks3D
             Health.TakeDamage(amount);
         }
 
+        /// <summary>
+        /// Method is only called when player dies.
+        /// </summary>
+        /// <param name="unit">Player unit</param>
         protected virtual void HandleUnitDied(Unit unit)
         {
             GameManager.Instance.MessageBus.Publish(new UnitDiedMessage(this));
+            GameManager.Instance.PlayerLost();
             gameObject.SetActive(false);            
         }
 

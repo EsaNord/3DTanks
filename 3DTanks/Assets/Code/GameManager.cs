@@ -6,6 +6,7 @@ using Tanks3D.persistance;
 using Tanks3D.Messaging;
 using Tanks3D.Localization;
 using L10n = Tanks3D.Localization.Localization;
+using System;
 
 namespace Tanks3D
 {
@@ -32,15 +33,17 @@ namespace Tanks3D
 
         #endregion
 
-        private List<Unit> m_lEnemyUnits = new List<Unit>();
-        private Unit m_uPlayerUnit;
+        private List<Unit> _enemyUnits = new List<Unit>();
+        private Unit _playerUnit;
         private SaveSystem _saveSystem;
+
+        public Score score;          
 
         private const string LanguageKey = "Language";
 
         public string SavePath { get { return Path.Combine(Application.persistentDataPath, "save"); } }
 
-        public MessageBus MessageBus { get; private set; }        
+        public MessageBus MessageBus { get; private set; }           
 
         protected void Awake()
         {
@@ -72,8 +75,11 @@ namespace Tanks3D
             IsClosing = false;            
             MessageBus = new MessageBus();
 
-            var UI = FindObjectOfType<UI.UI>();
+            score = GetComponent<Score>();
+            var UI = FindObjectOfType<UI.UI>();            
             UI.Init();
+
+            UI.ScoreUI.SetScoreItem();            
 
             Unit[] allUnits = FindObjectsOfType<Unit>();
             foreach (Unit unit in allUnits)
@@ -86,14 +92,38 @@ namespace Tanks3D
         }
 
         protected void Update()
-        {
+        {  
             bool save = Input.GetKeyDown(KeyCode.F2);
             bool load = Input.GetKeyDown(KeyCode.F3);
 
             if (save)
                 Save();
             else if (load)
-                Load();
+                Load();  
+            
+            if (score.CurrentScore >= score.TargetScore)
+            {
+                PlayerWon();
+            }            
+        }
+
+        /// <summary>
+        /// Defeat method,
+        /// this method is called when player dies.
+        /// </summary>
+        public void PlayerLost()
+        {
+            Debug.Log("Defeat");
+        }
+
+        /// <summary>
+        /// Victory method,
+        /// this method is called when player
+        /// collects enough points.
+        /// </summary>
+        private void PlayerWon()
+        {
+            Debug.Log("Victory");
         }
 
         private void AddUnit(Unit unit)
@@ -102,11 +132,12 @@ namespace Tanks3D
 
             if (unit is EnemyUnit)
             {
-                m_lEnemyUnits.Add(unit);
+                _enemyUnits.Add(unit);
             }
             else if (unit is PlayerUnit)
             {
-                m_uPlayerUnit = unit;
+                _playerUnit = unit;
+               UI.UI.Current.LivesUI.SetLivesItem(_playerUnit);
             }
             
             UI.UI.Current.HealthUI.AddUnit(unit);
@@ -115,11 +146,11 @@ namespace Tanks3D
         public void Save()
         {            
             GameData data = new GameData();
-            foreach (Unit unit in m_lEnemyUnits)
+            foreach (Unit unit in _enemyUnits)
             {
                 data.EnemyData.Add(unit.GetUnitData());
             }
-            data.PlayerData = m_uPlayerUnit.GetUnitData();
+            data.PlayerData = _playerUnit.GetUnitData();
 
             _saveSystem.Save(data);
             Debug.Log("Saved;");
@@ -130,12 +161,12 @@ namespace Tanks3D
             GameData data = _saveSystem.Load();
             foreach (UnitData unitData in data.EnemyData)
             {                
-                Unit enemy = m_lEnemyUnits.FirstOrDefault(unit => unit.Id == unitData.Id);
+                Unit enemy = _enemyUnits.FirstOrDefault(unit => unit.Id == unitData.Id);
                 if (enemy != null)
                     enemy.SetUnitData(unitData);
             }
 
-            m_uPlayerUnit.SetUnitData(data.PlayerData);
+            _playerUnit.SetUnitData(data.PlayerData);
         }   
         
         private void InitLocalization()

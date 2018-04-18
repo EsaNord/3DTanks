@@ -17,6 +17,7 @@ namespace Tanks3D
             // An event can't be fired from any other class than the one in which it is
             // declaired. Instead call a method which raises the event.
             RaiseUnitDiedEvent();
+
             return true;
         }
     }

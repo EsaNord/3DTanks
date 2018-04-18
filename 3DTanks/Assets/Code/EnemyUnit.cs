@@ -19,7 +19,7 @@ namespace Tanks3D
         [SerializeField]
         private Path _path;
         [SerializeField]
-        private Direction direction;
+        private Direction direction;        
 
         private IList<AIStateBase> _states = new List<AIStateBase>();        
 
@@ -37,7 +37,7 @@ namespace Tanks3D
                 }
                 return null;
             }
-        }
+        }        
 
         private void InitStates()
         {
