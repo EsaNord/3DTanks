@@ -13,6 +13,7 @@ namespace Tanks3D.UI
         private Unit _unit;
         private Text _text;
         private ISubscription<UnitDiedMessage> _unitDiedsubscription;
+        private ISubscription<UnitReset> _unitResetSub;
         private const string HealthKey = "health";        
 
         public bool IsEnemy { get { return _unit != null && _unit is EnemyUnit; } }
@@ -28,6 +29,8 @@ namespace Tanks3D.UI
             
             //_unit.Health.UnitDied += OnUnitDied;
             _unitDiedsubscription = GameManager.Instance.MessageBus.Subscribe<UnitDiedMessage>(OnUnitDied);
+            _unitResetSub = GameManager.Instance.MessageBus.Subscribe<UnitReset>(OnUnitReset);
+
             SetText(_unit.Health.CurrentHealth);
         }
 
@@ -42,6 +45,22 @@ namespace Tanks3D.UI
             {
                 UnregisterEventListeners();
                 gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// If player continues after defeat healt UI item is set to show players hp again.
+        /// </summary>
+        /// <param name="unit"></param>
+        private void OnUnitReset(UnitReset unit)
+        {
+            if (unit.ResetedUnit == _unit)
+            {
+                L10n.LanguageLoaded += OnLanguageChange;
+                _unit.Health.HealthChanged += OnUnitHealtChanged;
+                gameObject.SetActive(true);
+                SetText(_unit.Health.CurrentHealth);
+                _unitDiedsubscription = GameManager.Instance.MessageBus.Subscribe<UnitDiedMessage>(OnUnitDied);
             }
         }
 

@@ -119,6 +119,15 @@ namespace Tanks3D
             CurrentHealth = health;
         }
 
+        /// <summary>
+        /// Sets lives
+        /// </summary>
+        /// <param name="lives">amount of lives</param>
+        public void SetLives(int lives)
+        {
+            CurrentLives = lives;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -43,7 +43,10 @@ namespace Tanks3D
 
         public string SavePath { get { return Path.Combine(Application.persistentDataPath, "save"); } }
 
-        public MessageBus MessageBus { get; private set; }           
+        public MessageBus MessageBus { get; private set; }         
+        
+        public Unit Player { get { return _playerUnit; } }
+        public List<Unit> Enemies { get { return _enemyUnits; } }
 
         protected void Awake()
         {
@@ -79,7 +82,8 @@ namespace Tanks3D
             var UI = FindObjectOfType<UI.UI>();            
             UI.Init();
 
-            UI.ScoreUI.SetScoreItem();            
+            UI.ScoreUI.SetScoreItem();
+            UI.EndUI.InitItems();
 
             Unit[] allUnits = FindObjectsOfType<Unit>();
             foreach (Unit unit in allUnits)
@@ -113,7 +117,8 @@ namespace Tanks3D
         /// </summary>
         public void PlayerLost()
         {
-            Debug.Log("Defeat");
+            UI.UI.Current.EndUI.Defeat();
+            Time.timeScale = 0;            
         }
 
         /// <summary>
@@ -123,7 +128,8 @@ namespace Tanks3D
         /// </summary>
         private void PlayerWon()
         {
-            Debug.Log("Victory");
+            UI.UI.Current.EndUI.Victory();
+            Time.timeScale = 0;            
         }
 
         private void AddUnit(Unit unit)

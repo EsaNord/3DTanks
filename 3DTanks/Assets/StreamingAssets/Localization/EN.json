@@ -1,1 +1,1 @@
-﻿{"_keys":["save","load","delete","start","health","player","enemy","score","lives"],"_values":["Save","Load","Delete","Start","{0} Health {1}","Player","Enemy","Score {0} / {1}","Lives {0} / {1}"],"_langCode":1}
+﻿{"_keys":["save","load","delete","start","health","player","enemy","score","lives","yes","no","won","lost"],"_values":["Save","Load","Delete","Start","{0} Health {1}","Player","Enemy","Score {0} / {1}","Lives {0} / {1}","Yes","No","You won, play again?","You lost, try again?"],"_langCode":1}

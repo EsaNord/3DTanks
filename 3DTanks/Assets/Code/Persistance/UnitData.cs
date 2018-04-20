@@ -10,5 +10,7 @@ namespace Tanks3D.persistance
         public int Health;
         public Vector3 Position;
         public float YRotation;
+        public int PlayerScore;
+        public int Lives;
     }
 }

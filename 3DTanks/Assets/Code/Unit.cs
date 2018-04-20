@@ -109,7 +109,9 @@ namespace Tanks3D
                 Health = Health.CurrentHealth,
                 Position = transform.position,
                 YRotation = transform.rotation.y,
-                Id = Id
+                Id = Id,
+                PlayerScore = GameManager.Instance.score.CurrentScore,
+                Lives = Health.CurrentLives
             };
         }
 
@@ -118,6 +120,21 @@ namespace Tanks3D
             Health.SetHealth(data.Health);
             transform.position = data.Position;
             transform.eulerAngles = new Vector3(0, data.YRotation, 0);
+            GameManager.Instance.score.CurrentScore = data.PlayerScore;
+            Health.SetLives(data.Lives);
+        }
+
+        /// <summary>
+        /// Resets unit position, health, lives and sets it active.
+        /// Also publishes unit reset message so health ui items is also reset.
+        /// </summary>
+        public void ResetUnit()
+        {
+            Health.SetHealth(_startingHealth);
+            Health.SetLives(_lives);
+            transform.position = SpawnPoint;
+            gameObject.SetActive(true);
+            GameManager.Instance.MessageBus.Publish(new UnitReset(this));
         }
     }
 }

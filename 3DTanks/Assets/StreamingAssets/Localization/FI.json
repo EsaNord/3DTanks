@@ -1,1 +1,1 @@
-﻿{"_keys":["save","load","delete","start","health","player","enemy","score","lives"],"_values":["Tallenna","Lataa","Poista","Aloita","{0} Elämäpisteet {1}","Pelaaja","Vihollinen","Pisteet {0} / {1}","Elämät {0} / {1}"],"_langCode":2}
+﻿{"_keys":["save","load","delete","start","health","player","enemy","score","lives","yes","no","won","lost"],"_values":["Tallenna","Lataa","Poista","Aloita","{0} Elämäpisteet {1}","Pelaaja","Vihollinen","Pisteet {0} / {1}","Elämät {0} / {1}","Kyllä","Ei","Voitit, haluatko pelata uudelleen?","Hävisit, haluatko yrittää uudelleen?"],"_langCode":2}
