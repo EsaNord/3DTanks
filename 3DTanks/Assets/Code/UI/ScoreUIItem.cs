@@ -50,7 +50,7 @@ namespace Tanks3D.UI
         private void SetText(int score)
         {
             string translation = L10n.CurrentLanguage.GetTranslation(ScoreKey);            
-            _text.text = string.Format(translation, score.ToString(), _score.TargetScore.ToString());
+            _text.text = string.Format(translation, score, _score.TargetScore);
         }
         
         private void OnDestroy()

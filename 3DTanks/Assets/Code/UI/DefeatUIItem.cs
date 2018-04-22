@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Tanks3D.Localization;
+﻿using Tanks3D.Localization;
 using UnityEngine;
 using UnityEngine.UI;
 using L10n = Tanks3D.Localization.Localization;

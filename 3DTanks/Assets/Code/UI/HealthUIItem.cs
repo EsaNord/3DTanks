@@ -51,7 +51,7 @@ namespace Tanks3D.UI
         /// <summary>
         /// If player continues after defeat healt UI item is set to show players hp again.
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="unit">Unit that has reset</param>
         private void OnUnitReset(UnitReset unit)
         {
             if (unit.ResetedUnit == _unit)
